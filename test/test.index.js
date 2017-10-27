@@ -10,24 +10,6 @@ const options = {
   path: '/'
 }
 
-const server = app.listen(process.env.PORT, () => {
-  console.log('Listening on ' + process.env.PORT)
-})
-
-before(() => {
-
-  app.get('/', (req, res) => {
-    res.json(repo)
-  })
-
-  server
-
-})
-
-after(() => {
-  server.close()
-})
-
 describe('"/" GET Request', () => {
   it('responds with repo object', (done) => {
     http.get(options, (res) => {
