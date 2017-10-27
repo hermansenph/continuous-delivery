@@ -2,19 +2,19 @@ const { describe, before, after, it } = require('mocha')
 const { expect } = require('chai')
 const express = require('express')
 const app = express()
-const http = require('http')
+const request = require('request')
 require('dotenv').config()
 
-const options = {
-  host: 'localhost:' + process.env.PORT,
-  path: '/'
+const repo = {
+  name: 'Continuous Delivery',
+  description: 'A practice repository for testing and deployment.'
 }
 
 describe('"/" GET Request', () => {
   it('responds with repo object', (done) => {
-    http.get(options, (res) => {
-      expect(res).to.equal(options.json())
+    request('http://localhost:' + process.env.PORT, (err, res, body) => {
+      expect(JSON.parse(body)).to.deep.equal(repo)
+      done()
     })
-    done()
   })
 })
