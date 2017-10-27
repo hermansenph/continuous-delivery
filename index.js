@@ -1,5 +1,5 @@
 require('dotenv').config()
-const createApp = require('./create-app')
+const { createApp } = require('./create-app')
 
 const app = createApp()
 

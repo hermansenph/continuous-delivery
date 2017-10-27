@@ -3,13 +3,8 @@ const { expect } = require('chai')
 const express = require('express')
 const app = express()
 const request = require('request')
-const createApp = require('../create-app')
+const { createApp, repo } = require('../create-app')
 require('dotenv').config()
-
-const repo = {
-  name: 'Continuous Delivery',
-  description: 'A practice repository for testing and deployment.'
-}
 
 describe('app', () => {
 

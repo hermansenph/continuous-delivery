@@ -5,7 +5,7 @@ const repo = {
   description: 'A practice repository for testing and deployment.'
 }
 
-module.exports = function createApp() {
+function createApp() {
 
   const app = express()
 
@@ -15,3 +15,5 @@ module.exports = function createApp() {
 
   return app
 }
+
+module.exports = { createApp, repo }
