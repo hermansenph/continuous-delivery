@@ -3,6 +3,7 @@ const express = require('express')
 const repo = {
   name: 'Continuous Delivery',
   description: 'A practice repository for testing and deployment.'
+  url: 'https://github.com/hermansenph/continuous-delivery'
 }
 
 function createApp() {

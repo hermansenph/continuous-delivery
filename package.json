@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "A practice repository for testing and deployment.",
   "main": "index.js",
+  "engines": {
+    "node": "8.8.0"
+  },
   "scripts": {
     "test": "mocha test/",
     "tdd": "mocha test/ -w -R min",
-    "cover": "nyc --reporter=lcov npm test"
+    "cover": "nyc --reporter=lcov npm test",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
