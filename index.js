@@ -1,8 +1,15 @@
 require('dotenv').config()
 const { createApp } = require('./create-app')
+const todosGateway = require('./todos-gateway')
+const { MongoClient } = require('mongodb')
 
-const app = createApp()
+MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
 
-app.listen(process.env.PORT, () => {
-  console.log('Listening on ' + process.env.PORT)
+  const collection = db.collection('todos')
+  const app = createApp(todosGateway(collection))
+
+  app.listen(process.env.PORT, () => {
+    console.log('Listening on ' + process.env.PORT)
+  })
+
 })

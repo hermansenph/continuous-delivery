@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const repo = {
   name: 'Continuous Delivery',
@@ -6,13 +7,33 @@ const repo = {
   url: 'https://github.com/hermansenph/continuous-delivery'
 }
 
-function createApp() {
+function createApp(gateway) {
 
   const app = express()
+  const todos = gateway
 
-  app.get('/', (req, res) => {
-    res.json(repo)
-  })
+  app
+    .use(bodyParser.json())
+    .get('/', (req, res) => {
+      res.json(repo)
+    })
+    .get('/todos', async (req, res) => {
+      const found = await todos.find()
+      res.json(found)
+    })
+    .get('/todos/:id', async (req, res) => {
+      const found = await todos.findById(req.params.id)
+      if (found) return res.json(found)
+      res.status(404).json({
+        error: 'Not Found',
+        message: `todo ${req.params.id} does not exist.`
+      })
+    })
+    .post('/todos', async (req, res) => {
+      const newTodo = req.body
+      const createdTodo = await todos.create(newTodo)
+      res.json(createdTodo)
+    })
 
   return app
 }
