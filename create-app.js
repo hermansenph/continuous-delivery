@@ -7,24 +7,30 @@ const repo = {
   url: 'https://github.com/hermansenph/continuous-delivery'
 }
 
-function createApp(gateway, collection) {
+function createApp(gateway) {
 
   const app = express()
-  const todos = gateway(collection)
+  const todos = gateway
 
   app
     .use(bodyParser.json())
     .get('/', (req, res) => {
       res.json(repo)
     })
-    .post('/find', async (req, res) => {
-      const id = bodyParser.json(req.body)
-      const foundTodos = await todos.findById({id})
-      res.json(foundTodos)
+    .get('/todos', async (req, res) => {
+      const found = await todos.find()
+      res.json(found)
     })
-    .post('/create', async (req, res) => {
+    .get('/todos/:id', async (req, res) => {
+      const found = await todos.findById(req.params.id)
+      if (found) return res.json(found)
+      res.status(404).json({
+        error: 'Not Found',
+        message: `todo ${req.params.id} does not exist.`
+      })
+    })
+    .post('/todos', async (req, res) => {
       const newTodo = req.body
-      console.log(newTodo)
       const createdTodo = await todos.create(newTodo)
       res.json(createdTodo)
     })

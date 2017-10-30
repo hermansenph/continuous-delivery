@@ -7,8 +7,12 @@ module.exports = function todosGateway(collection) {
       await collection.insertOne(todo)
       return todo
     },
+    async find() {
+      const found = await collection.find({}).toArray()
+      return found
+    },
     async findById(id) {
-      const found = await collection.find({ id }).toArray()
+      const found = await collection.findOne({ id })
       return found
     },
     async updateById(id, updates) {

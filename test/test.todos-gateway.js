@@ -34,12 +34,21 @@ describe('todosGateway', () => {
   })
 
   describe('find', () => {
+    it('returns list of all todos', async () => {
+      const found = await todos.find()
+      console.log(found[0])
+      expect(found[0].id).to.deep.equal(testId)
+    })
+  })
+
+  describe('findById', () => {
 
     describe('when the todo exists', () => {
 
       it('returns the found todo', async () => {
         const found = await todos.findById(testId)
-        expect(found[0])
+        console.log(found)
+        expect(found)
           .to.be.an('object')
           .with.property('id')
           .that.equals(testId)
@@ -51,7 +60,7 @@ describe('todosGateway', () => {
 
       it('returns null', async () => {
         const found = await todos.findById('lol')
-        expect(found).to.deep.equal([])
+        expect(found).to.equal(null)
       })
 
     })
