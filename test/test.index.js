@@ -4,11 +4,12 @@ const express = require('express')
 const app = express()
 const request = require('request')
 const { createApp, repo } = require('../create-app')
+const todosGateway = require('../todos-gateway')
 require('dotenv').config()
 
 describe('app', () => {
 
-  const app = createApp()
+  const app = createApp(todosGateway, )
   let server
 
   before(done => {
@@ -24,12 +25,15 @@ describe('app', () => {
   })
 
     describe('"/" GET Request', () => {
+
       it('responds with repo object', (done) => {
         request('http://localhost:' + process.env.PORT, (err, res, body) => {
           expect(JSON.parse(body)).to.deep.equal(repo)
           done()
         })
+
       })
+
     })
 
   })
