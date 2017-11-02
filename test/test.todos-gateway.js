@@ -3,7 +3,7 @@ const { describe, before, beforeEach, after, it } = require('mocha')
 const { expect } = require('chai')
 const uuid = require('uuid/v4')
 const { MongoClient } = require('mongodb')
-const todosGateway = require('../todos-gateway')
+const todosGateway = require('../server/todos-gateway')
 
 describe('todosGateway', () => {
 
@@ -34,11 +34,12 @@ describe('todosGateway', () => {
   })
 
   describe('find', () => {
+
     it('returns list of all todos', async () => {
       const found = await todos.find()
-      console.log(found[0])
       expect(found[0].id).to.deep.equal(testId)
     })
+
   })
 
   describe('findById', () => {
@@ -47,7 +48,6 @@ describe('todosGateway', () => {
 
       it('returns the found todo', async () => {
         const found = await todos.findById(testId)
-        console.log(found)
         expect(found)
           .to.be.an('object')
           .with.property('id')
@@ -63,6 +63,18 @@ describe('todosGateway', () => {
         expect(found).to.equal(null)
       })
 
+    })
+
+  })
+
+  describe('create', () => {
+
+    it('returns created todo', async () => {
+      const created = await todos.create({task: 'complete part 4', date: '11/02/17'})
+      expect(created)
+        .to.be.an('object')
+        .with.property('date')
+        .that.equals('11/02/17')
     })
 
   })

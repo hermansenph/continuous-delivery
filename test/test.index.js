@@ -3,8 +3,8 @@ const { expect } = require('chai')
 const express = require('express')
 const app = express()
 const request = require('request')
-const { createApp, repo } = require('../create-app')
-const todosGateway = require('../todos-gateway')
+const { createApp, repo } = require('../server/create-app')
+const todosGateway = require('../server/todos-gateway')
 require('dotenv').config()
 
 describe('app', () => {
