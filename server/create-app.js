@@ -32,7 +32,6 @@ function createApp(gateway) {
       })
     })
     .post('/todos', async (req, res) => {
-      console.log(req.body)
       const newTodo = req.body
       const createdTodo = await todos.create(newTodo)
       res.json(createdTodo)

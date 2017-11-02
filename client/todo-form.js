@@ -14,8 +14,6 @@ export default class TodoForm extends React.Component {
       body: JSON.stringify(reqObject),
       headers: { 'Content-Type': 'application/json' }
     })
-      .then(res => res.json())
-      .then(res => console.log(res))
   }
 
   render() {
