@@ -19,7 +19,10 @@
     "bundle": "browserify ./server/index.js -t babelify -o ./server/public/main.js",
     "sync": "browser-sync start --server --no-open --port 3000 --files ./server/public/main.js",
     "bundle:watch": "watchify ./server/index.js -vd -t babelify -o ./server/public/main.js",
-    "watch": "npm-run-all --parallel bundle:watch sync"
+    "watch:server": "nodemon server",
+    "watch:client": "watchify ./client/index.js -vd -t babelify -o ./server/public/main.js",
+    "watch:sync": "browser-sync start -c sync.js",
+    "watch": "npm-run-all --parallel watch:*"
   },
   "repository": {
     "type": "git",
@@ -42,10 +45,13 @@
     "react-dom": "16.0.0"
   },
   "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
+    "babel-plugin-transform-react-jsx": "6.24.1",
+    "babelify": "8.0.0",
+    "browser-sync": "2.18.13",
+    "browserify": "14.5.0",
     "chai": "^4.1.2",
-    "mocha": "^4.0.1",
-    "nyc": "^11.2.1",
-    "request": "^2.83.0",
     "eslint": "4.5.0",
     "eslint-config-standard": "10.2.1",
     "eslint-plugin-import": "2.7.0",
@@ -53,13 +59,11 @@
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-react": "7.3.0",
     "eslint-plugin-standard": "3.0.1",
-    "babel-core": "6.26.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
-    "babel-plugin-transform-react-jsx": "6.24.1",
-    "babelify": "8.0.0",
-    "browser-sync": "2.18.13",
-    "browserify": "14.5.0",
+    "mocha": "^4.0.1",
+    "nodemon": "^1.12.1",
     "npm-run-all": "4.1.1",
+    "nyc": "^11.2.1",
+    "request": "^2.83.0",
     "watchify": "3.9.0"
   }
 }

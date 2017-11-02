@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const path = require('path')
 
 const repo = {
   name: 'Continuous Delivery',
@@ -14,6 +15,7 @@ function createApp(gateway) {
 
   app
     .use(bodyParser.json())
+    .use(express.static(path.join(__dirname, 'public')))
     .get('/', (req, res) => {
       res.json(repo)
     })
