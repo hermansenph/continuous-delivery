@@ -58,3 +58,4 @@ typings/
 .env
 
 .eslintrc
+server/public/main.js
