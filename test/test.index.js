@@ -1,7 +1,5 @@
 const { describe, before, after, it } = require('mocha')
 const { expect } = require('chai')
-const express = require('express')
-const app = express()
 const request = require('request')
 const { createApp, repo } = require('../server/create-app')
 const todosGateway = require('../server/todos-gateway')
@@ -17,6 +15,9 @@ describe('app', () => {
   before(done => {
 
     MongoClient.connect(process.env.MONGODB_URI, (err, _db) => {
+
+      if (err) console.log(err)
+
       db = _db
       collection = db.collection('todos')
 
@@ -41,6 +42,7 @@ describe('app', () => {
 
     it('responds with repo object', (done) => {
       request('http://localhost:' + process.env.PORT, (err, res, body) => {
+        if (err) console.log(err)
         expect(JSON.parse(body)).to.deep.equal(repo)
         done()
       })
@@ -58,6 +60,7 @@ describe('app', () => {
         body: {task: 'complete part 4', date: '11/02/17'}
       },
       (err, res, body) => {
+        if (err) console.log(err)
         expect(body)
           .to.be.an('object')
           .with.property('date')

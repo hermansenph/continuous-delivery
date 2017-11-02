@@ -5,6 +5,8 @@ const { MongoClient } = require('mongodb')
 
 MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
 
+  if (err) console.log(err)
+
   const collection = db.collection('todos')
   const app = createApp(todosGateway(collection))
 
