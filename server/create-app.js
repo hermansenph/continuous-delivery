@@ -2,12 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path')
 
-const repo = {
-  name: 'Continuous Delivery',
-  description: 'A practice repository for testing and deployment.',
-  url: 'https://github.com/hermansenph/continuous-delivery'
-}
-
 function createApp(gateway) {
 
   const app = express()
@@ -16,9 +10,6 @@ function createApp(gateway) {
   app
     .use(bodyParser.json())
     .use(express.static(path.join(__dirname, 'public')))
-    .get('/', (req, res) => {
-      res.json(repo)
-    })
     .get('/todos', async (req, res) => {
       const found = await todos.find()
       res.json(found)
@@ -40,4 +31,4 @@ function createApp(gateway) {
   return app
 }
 
-module.exports = { createApp, repo }
+module.exports = { createApp }

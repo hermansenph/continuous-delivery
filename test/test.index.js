@@ -1,7 +1,7 @@
 const { describe, before, after, it } = require('mocha')
 const { expect } = require('chai')
 const request = require('request')
-const { createApp, repo } = require('../server/create-app')
+const { createApp } = require('../server/create-app')
 const todosGateway = require('../server/todos-gateway')
 const { MongoClient } = require('mongodb')
 require('dotenv').config()
@@ -36,19 +36,6 @@ describe('app', () => {
       done()
     })
     db.close()
-  })
-
-  describe('"/" GET Request', () => {
-
-    it('responds with repo object', (done) => {
-      request('http://localhost:' + process.env.PORT, (err, res, body) => {
-        if (err) console.log(err)
-        expect(JSON.parse(body)).to.deep.equal(repo)
-        done()
-      })
-
-    })
-
   })
 
   describe('"/todos" POST Request', () => {
