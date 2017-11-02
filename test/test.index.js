@@ -5,35 +5,68 @@ const app = express()
 const request = require('request')
 const { createApp, repo } = require('../server/create-app')
 const todosGateway = require('../server/todos-gateway')
+const { MongoClient } = require('mongodb')
 require('dotenv').config()
 
 describe('app', () => {
 
-  const app = createApp(todosGateway, )
   let server
+  let db
+  let collection
 
   before(done => {
-    server = app.listen(process.env.PORT, () => {
-      done()
+
+    MongoClient.connect(process.env.MONGODB_URI, (err, _db) => {
+      db = _db
+      collection = db.collection('todos')
+
+      const app = createApp(todosGateway(collection))
+
+      server = app.listen(process.env.PORT, () => {
+        done()
+      })
+
     })
+
   })
 
   after(done => {
     server.close(() => {
       done()
     })
+    db.close()
   })
 
-    describe('"/" GET Request', () => {
+  describe('"/" GET Request', () => {
 
-      it('responds with repo object', (done) => {
-        request('http://localhost:' + process.env.PORT, (err, res, body) => {
-          expect(JSON.parse(body)).to.deep.equal(repo)
-          done()
-        })
-
+    it('responds with repo object', (done) => {
+      request('http://localhost:' + process.env.PORT, (err, res, body) => {
+        expect(JSON.parse(body)).to.deep.equal(repo)
+        done()
       })
 
     })
 
   })
+
+  describe('"/todos" POST Request', () => {
+
+    it('responds with created todo', (done) => {
+      request.post({
+        url: 'http://localhost:' + process.env.PORT + '/todos',
+        json: true,
+        body: {task: 'complete part 4', date: '11/02/17'}
+      },
+      (err, res, body) => {
+        expect(body)
+          .to.be.an('object')
+          .with.property('date')
+          .that.equals('11/02/17')
+        done()
+      })
+
+    })
+
+  })
+
+})
