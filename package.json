@@ -10,7 +10,7 @@
     "test": "mocha test/",
     "tdd": "mocha test/ -w -R min",
     "cover": "nyc --reporter=lcov npm test",
-    "start": "node index.js",
+    "start": "node ./server/index.js",
     "lint": "run-p lint:*",
     "lint:html": "htmlhint ./**/*.html",
     "lint:css": "stylelint ./**/*.css",
