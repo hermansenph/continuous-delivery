@@ -40,8 +40,12 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <TodoForm handleSubmit={ this.createTodo }/>
-        <TodoList todos={ this.state.todos }/>
+        <div className="col-md-4 col-md-offset-4">
+          <TodoForm handleSubmit={ this.createTodo }/>
+        </div>
+        <div className="col-md-4 col-md-offset-4">
+          <TodoList todos={ this.state.todos }/>
+        </div>
       </div>
     )
   }
